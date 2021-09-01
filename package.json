@@ -6,7 +6,8 @@
   "scripts": {
     "test": "test",
     "build": "webpack",
-    "dev-server": "webpack serve"
+    "dev-server": "webpack serve",
+    "lint:fix": "eslint './src/**/*.{js}'"
   },
   "husky": {
     "hooks": {
