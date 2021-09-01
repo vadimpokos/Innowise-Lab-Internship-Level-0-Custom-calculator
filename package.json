@@ -1,0 +1,45 @@
+{
+  "name": "calc",
+  "version": "1.0.0",
+  "description": "vanilla js calculator",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "build": "webpack",
+    "dev-server": "webpack serve"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.(js)": ["eslint --fix"]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vadimpokos/Innowise-Lab-Internship-Level-0-Custom-calculator.git"
+  },
+  "author": "Vadim Pokosenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vadimpokos/Innowise-Lab-Internship-Level-0-Custom-calculator/issues"
+  },
+  "homepage": "https://github.com/vadimpokos/Innowise-Lab-Internship-Level-0-Custom-calculator#readme",
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^6.2.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "prettier": "2.3.2",
+    "style-loader": "^3.2.1",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
