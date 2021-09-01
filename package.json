@@ -7,7 +7,7 @@
     "test": "test",
     "build": "webpack",
     "dev-server": "webpack serve",
-    "lint:write": "eslint --debug src/ --fix",
+    "lint:fix": "eslint './src/**/*.{js}'",
     "prepare": "husky install"
   },
   "husky": {
@@ -16,7 +16,7 @@
     }
   },
   "lint-staged": {
-    "*.(js)": ["npm run lint:write", "git add"]
+    "*.(js)": ["npm run lint:fix"]
   },
   "repository": {
     "type": "git",

@@ -1,2 +1,2 @@
 import './styles/style.css'
-console.log('hello wosgdfgdgdfrld')
+console.log('hello wosgdddddddddddddddfgdgdfrld')
