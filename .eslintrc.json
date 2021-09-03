@@ -1,7 +1,7 @@
 {
     "parser": "babel-eslint",
     "extends": ["plugin:prettier/recommended"],
-    "plugins": ["prettier"],
+    "plugins": ["prettier", "babel-eslint"],
     "rules": {
         "prettier/prettier": "error",
         "arrow-body-style": "off",
