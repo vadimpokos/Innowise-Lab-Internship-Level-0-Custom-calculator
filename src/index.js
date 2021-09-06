@@ -12,6 +12,9 @@ const fillButtons = (arr) => {
                 value: item.value,
                 className: `${item.className} calc-button`,
             },
+            dataAttributes: {
+                [`data-key`]: item.dataKey,
+            },
         }
     })
 }
@@ -26,7 +29,9 @@ const createElem = (arr) => {
         Object.entries(item.properties || {}).forEach(([key, value]) => {
             element[key] = value
         })
-        console.log(element.classList.contains('dark'))
+        Object.entries(item.dataAttributes || {}).forEach(([key, value]) => {
+            element.setAttribute(key, value)
+        })
         return element
     })
     return elems
@@ -60,7 +65,7 @@ document.querySelector('.buttons-container').addEventListener('click', (e) => {
         : null
 
     document.querySelector('.result-display').innerText = input
-    console.log(e)
+    console.log(e.target.attributes['data-key'].value)
 })
 
 init(createElem(fillButtons(rightButtons)), '.left-buttons')
