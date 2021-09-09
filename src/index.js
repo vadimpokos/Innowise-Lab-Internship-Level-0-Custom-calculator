@@ -71,3 +71,81 @@ document.querySelector('.buttons-container').addEventListener('click', (e) => {
 init(createElem(fillButtons(rightButtons)), '.left-buttons')
 
 init(createElem(fillButtons(leftButtons)), '.right-buttons')
+
+// ///////////////
+
+const operators = {
+    '+': (x, y) => x + y,
+    '-': (x, y) => x - y,
+    '*': (x, y) => x * y,
+    '/': (x, y) => x / y,
+}
+
+let evaluate = (expr) => {
+    let stack = []
+
+    expr.split(' ').forEach((token) => {
+        if (token in operators) {
+            let [y, x] = [stack.pop(), stack.pop()]
+            stack.push(operators[token](x, y))
+        } else {
+            stack.push(parseFloat(token))
+        }
+    })
+
+    return stack.pop()
+}
+
+function infixToPostfix(infix) {
+    const presedences = ['-', '+', '*', '/']
+
+    var opsStack = [],
+        postfix = []
+
+    for (let token of infix) {
+        if ('number' === typeof +token && !isNaN(+token)) {
+            postfix.push(token)
+            continue
+        }
+        let topOfStack = opsStack[opsStack.length - 1]
+        if (!opsStack.length || topOfStack == '(') {
+            opsStack.push(token)
+            continue
+        }
+        if (token == '(') {
+            opsStack.push(token)
+            continue
+        }
+        // Step 4
+        if (token == ')') {
+            while (opsStack.length) {
+                let op = opsStack.pop()
+                if (op == '(') break
+                postfix.push(op)
+            }
+            continue
+        }
+        // Step 5
+        let prevPresedence = presedences.indexOf(topOfStack),
+            currPresedence = presedences.indexOf(token)
+        while (currPresedence < prevPresedence) {
+            let op = opsStack.pop()
+            postfix.push(op)
+            prevPresedence = presedences.indexOf(opsStack[opsStack.length - 1])
+        }
+        opsStack.push(token)
+    }
+    // Step 6
+    while (opsStack.length) {
+        let op = opsStack.pop()
+        if (op == '(') break
+        postfix.push(op)
+    }
+
+    return postfix.join(' ')
+}
+
+console.log(infixToPostfix(['2', '+', '2', '*', '(', '2', '+', '2', ')']))
+console.log(
+    evaluate(infixToPostfix(['2', '+', '2', '*', '(', '2', '+', '2', ')']))
+)
