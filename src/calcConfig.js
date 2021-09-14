@@ -39,4 +39,5 @@ export const rightButtons = [
     { value: 'ʸ√x', className: 'dark', dataKey: 'yrtx' },
     { value: 'ln', className: 'dark', dataKey: 'ln' },
     { value: 'log₁₀', className: 'dark', dataKey: 'log10' },
+    { value: '←', className: 'dark backspace', dataKey: 'undo' },
 ]

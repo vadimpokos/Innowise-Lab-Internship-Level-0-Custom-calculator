@@ -1,8 +1,7 @@
 import './styles/style.css'
-import { InfixToPostfix } from './parser'
-import { evaluate, postfixEval } from './evaluate'
 
 import { leftButtons, rightButtons } from './calcConfig'
+import { Calculator, CalculateCommand, Insert } from './calculator'
 const operators = ['+', '-', '/', 'X']
 
 const fillButtons = (arr) => {
@@ -43,67 +42,56 @@ const init = (arr, place) => {
     arr.forEach((item) => document.querySelector(place).append(item))
 }
 
-const calculatorInputHandler = (prevValue, newValue, isOperator) => {
-    const stringArr = prevValue.split(' ')
-    console.log(stringArr)
+document.querySelector('.result-display').innerText = '0'
 
-    if (
-        (!prevValue && isOperator) ||
-        (operators.find((item) => item === prevValue.slice(-1)) && isOperator)
-    ) {
-        console.log('incorrect')
-    }
-}
+const calculator = new Calculator(
+    document.querySelector('.result-display').innerText,
+    document.querySelector('.result-display')
+)
 
-const handleBrackets = (string) => {
-    if (string.includes('(')) {
-        const arrFromString = string.split(' ')
-        const openIndex = arrFromString.findIndex((item) => item === '(')
-        const closeIndex = arrFromString.findIndex((item) => item === ')')
-        console.log(arrFromString.slice(openIndex + 1, closeIndex).join(' '))
-    } else {
-        console.log(string)
-    }
-}
+let input = document.querySelector('.result-display').innerText
 
 document.querySelector('.buttons-container').addEventListener('click', (e) => {
-    let input = document.querySelector('.result-display').innerText
-    let prev = document.querySelector('.result-display').innerText
     const isOperator = e.target.attributes['data-operator'] ? true : false
     const isBracket = e.target.value === '(' || e.target.value === ')'
-    console.log('bracket', isBracket)
-    calculatorInputHandler(prev, e.target.value, isOperator)
-
-    console.log(e.target.attributes['data-key'].value)
-
     switch (e.target.attributes['data-key'].value) {
         case 'equals':
-            console.log(input.split(' '))
-            console.log(evaluate(InfixToPostfix(input)))
+            calculator.executeCommand(new CalculateCommand(input))
+            document.querySelector('.result-display').innerText =
+                calculator.value
             break
         case '(':
         case ')':
             input += ` ${e.target.value}`
+            calculator.executeCommand(new Insert(input))
+            calculator.value = input
+            document.querySelector('.result-display').innerText =
+                calculator.value
+            break
+        case 'undo':
+            calculator.undo()
+            document.querySelector('.result-display').innerText =
+                calculator.value
             break
         default:
-            e.target.value
-                ? isOperator ||
-                  input.slice(-1) === '(' ||
-                  operators.find((item) => item === input.slice(-1))
+            if (e.target.value) {
+                input = calculator.value
+                isOperator ||
+                input.slice(-1) === '(' ||
+                operators.find((item) => item === input.slice(-1))
                     ? (input += ` ${e.target.value}`)
                     : (input += e.target.value)
-                : null
-    }
+            } else {
+                null
+            }
+            calculator.value = input
+            calculator.executeCommand(new Insert(input))
 
-    document.querySelector('.result-display').innerText = input
+            document.querySelector('.result-display').innerText =
+                calculator.value
+    }
 })
 
 init(createElem(fillButtons(rightButtons)), '.left-buttons')
 
 init(createElem(fillButtons(leftButtons)), '.right-buttons')
-
-// console.log(evaluate(infixToPostfix(['1', '1', '3', '-', '+'])))
-// console.log(postfixEval(['37', '3', '+']))
-// console.log(InfixToPostfix(['1', '-', '1', '(', '+', '3', ')'].join(' ')))
-
-handleBrackets('1 + ( 1 + 3 )')

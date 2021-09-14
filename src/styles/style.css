@@ -57,7 +57,7 @@ body {
     width: 60%;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(3, 50px);
+    grid-template-rows: repeat(4, 50px);
     column-gap: 1px;
     row-gap: 1px;
 }
@@ -101,4 +101,8 @@ body {
 
 .equals:active {
     border-bottom-right-radius: 15px;
+}
+
+.backspace {
+    grid-column: 5 / span 2;
 }

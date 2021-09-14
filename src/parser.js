@@ -27,8 +27,8 @@ function isEmpty(stackArr) {
 
 /* Check for Precedence */
 function prcd(char1, char2) {
-    const char1_index = ''
-    const char2_index = ''
+    let char1_index = ''
+    let char2_index = ''
     const _def_prcd = '-+X/'
     for (let i = 0; i < _def_prcd.length; i++) {
         if (char1 == _def_prcd.charAt(i)) char1_index = i
