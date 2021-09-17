@@ -1,7 +1,21 @@
 import './styles/style.css'
 
 import { leftButtons, rightButtons } from './calcConfig'
-import { Calculator, CalculateCommand, Insert } from './calculator'
+import {
+    Calculator,
+    CalculateCommand,
+    Insert,
+    Pow3,
+    EpowX,
+    TenPowX,
+    OneDivideX,
+    Pow2,
+    SqrtX,
+    CbRtX,
+    Ln,
+    Log10,
+    PowY,
+} from './calculator'
 const operators = ['+', '-', '/', 'X']
 
 const fillButtons = (arr) => {
@@ -50,30 +64,57 @@ const calculator = new Calculator(
 )
 
 let input = document.querySelector('.result-display').innerText
+let secondFunctionArgInput = '0'
 
 document.querySelector('.buttons-container').addEventListener('click', (e) => {
     const isOperator = e.target.attributes['data-operator'] ? true : false
-    const isBracket = e.target.value === '(' || e.target.value === ')'
     switch (e.target.attributes['data-key'].value) {
         case 'equals':
-            calculator.executeCommand(new CalculateCommand(input))
-            document.querySelector('.result-display').innerText =
-                calculator.value
+            calculator.executeCommand(new CalculateCommand())
             break
         case '(':
         case ')':
+            input = calculator.value
             input += ` ${e.target.value}`
-            calculator.executeCommand(new Insert(input))
+            calculator.executeCommand(new Insert())
             calculator.value = input
-            document.querySelector('.result-display').innerText =
-                calculator.value
             break
         case 'undo':
             calculator.undo()
-            document.querySelector('.result-display').innerText =
-                calculator.value
+            break
+        case 'xpow2':
+            calculator.executeCommand(new Pow2())
+            break
+        case 'xpow3':
+            calculator.executeCommand(new Pow3())
+            break
+        case 'epowx':
+            calculator.executeCommand(new EpowX())
+            break
+        case '10powx':
+            calculator.executeCommand(new TenPowX())
+            break
+        case '1/x':
+            calculator.executeCommand(new OneDivideX())
+            break
+        case 'sqrtx':
+            calculator.executeCommand(new SqrtX())
+            break
+        case 'cubertx':
+            calculator.executeCommand(new CbRtX())
+            break
+        case 'ln':
+            calculator.executeCommand(new Ln())
+            break
+        case 'log10':
+            calculator.executeCommand(new Log10())
+            break
+        case 'xpowy':
+            calculator.executeCommand(new PowY())
             break
         default:
+            console.log(calculator.pendingFunction)
+
             if (e.target.value) {
                 input = calculator.value
                 isOperator ||
@@ -85,11 +126,9 @@ document.querySelector('.buttons-container').addEventListener('click', (e) => {
                 null
             }
             calculator.value = input
-            calculator.executeCommand(new Insert(input))
-
-            document.querySelector('.result-display').innerText =
-                calculator.value
+            calculator.executeCommand(new Insert())
     }
+    document.querySelector('.result-display').innerText = calculator.value
 })
 
 init(createElem(fillButtons(rightButtons)), '.left-buttons')
