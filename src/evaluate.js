@@ -42,7 +42,7 @@ export function postfixEval(postfixArray) {
             stack.push(parseFloat(element))
         }
     }
-    //final check for non numbers within the stack
+
     let returnValue = null
     while (stack.length > 0) {
         console.log(stack)

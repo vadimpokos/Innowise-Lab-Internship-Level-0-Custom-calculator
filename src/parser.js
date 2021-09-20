@@ -14,7 +14,9 @@ function isOperand(who) {
 }
 
 function isOperator(who) {
-    return who == '+' || who == '-' || who == 'X' || who == '/' ? true : false
+    return who === '+' || who === '-' || who === 'X' || who === '/'
+        ? true
+        : false
 }
 
 function topStack(stackArr) {
@@ -25,7 +27,6 @@ function isEmpty(stackArr) {
     return stackArr.length == 0 ? true : false
 }
 
-/* Check for Precedence */
 function prcd(char1, char2) {
     let char1_index = ''
     let char2_index = ''

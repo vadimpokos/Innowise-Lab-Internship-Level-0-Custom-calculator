@@ -5,16 +5,12 @@ import {
     Calculator,
     CalculateCommand,
     Insert,
-    Pow3,
-    EpowX,
-    TenPowX,
-    OneDivideX,
-    Pow2,
-    SqrtX,
-    CbRtX,
-    Ln,
-    Log10,
-    PowY,
+    PlusMinus,
+    AllClear,
+    MemoryPlus,
+    Memory,
+    MemoryMinus,
+    MemoryRead,
 } from './calculator'
 const operators = ['+', '-', '/', 'X']
 
@@ -63,14 +59,15 @@ const calculator = new Calculator(
     document.querySelector('.result-display')
 )
 
-let input = document.querySelector('.result-display').innerText
-let secondFunctionArgInput = '0'
-
 document.querySelector('.buttons-container').addEventListener('click', (e) => {
+    let input = document.querySelector('.result-display').innerText
     const isOperator = e.target.attributes['data-operator'] ? true : false
     switch (e.target.attributes['data-key'].value) {
         case 'equals':
             calculator.executeCommand(new CalculateCommand())
+            break
+        case 'plusMinus':
+            calculator.executeCommand(new PlusMinus())
             break
         case '(':
         case ')':
@@ -83,52 +80,93 @@ document.querySelector('.buttons-container').addEventListener('click', (e) => {
             calculator.undo()
             break
         case 'xpow2':
-            calculator.executeCommand(new Pow2())
+            input = calculator.value
+            input += ' ^ 2'
+            calculator.executeCommand(new Insert())
+            calculator.value = input
             break
         case 'xpow3':
-            calculator.executeCommand(new Pow3())
-            break
-        case 'epowx':
-            calculator.executeCommand(new EpowX())
-            break
-        case '10powx':
-            calculator.executeCommand(new TenPowX())
-            break
-        case '1/x':
-            calculator.executeCommand(new OneDivideX())
+            input = calculator.value
+            input += ' ^ 3'
+            calculator.executeCommand(new Insert())
+            calculator.value = input
             break
         case 'sqrtx':
-            calculator.executeCommand(new SqrtX())
+            input = calculator.value
+            input += ' root 2'
+            calculator.executeCommand(new Insert())
+            calculator.value = input
             break
         case 'cubertx':
-            calculator.executeCommand(new CbRtX())
+            input = calculator.value
+            input += ' root 3'
+            calculator.executeCommand(new Insert())
+            calculator.value = input
             break
+        case 'AC':
+            calculator.executeCommand(new AllClear())
+            break
+        case 'mc':
+            calculator.executeCommand(new Memory())
+            break
+        case 'm+':
+            calculator.executeCommand(new MemoryPlus())
+            break
+        case 'm-':
+            calculator.executeCommand(new MemoryMinus())
+            break
+        case 'mr':
+            calculator.executeCommand(new MemoryRead())
+            break
+        case '^':
+        case 'root':
+        case 'ex':
+        case '10x':
         case 'ln':
-            calculator.executeCommand(new Ln())
-            break
         case 'log10':
-            calculator.executeCommand(new Log10())
-            break
-        case 'xpowy':
-            calculator.executeCommand(new PowY())
+        case '%':
+        case '1/x':
+            input = calculator.value
+            input += ` ${e.target.attributes['data-key'].value}`
+            calculator.executeCommand(new Insert())
+            calculator.value = input
             break
         default:
-            console.log(calculator.pendingFunction)
-
             if (e.target.value) {
                 input = calculator.value
-                isOperator ||
-                input.slice(-1) === '(' ||
-                operators.find((item) => item === input.slice(-1))
-                    ? (input += ` ${e.target.value}`)
-                    : (input += e.target.value)
+                console.log(input.split(' ').slice(1, -2))
+                if (
+                    isNaN(+input.split(' ')[input.split(' ').length - 2]) &&
+                    input.slice(-1) === '-' &&
+                    !isNaN(+e.target.value)
+                ) {
+                    input += e.target.value
+                } else if (
+                    isOperator ||
+                    input.slice(-1) === '(' ||
+                    input.slice(-1) === '^' ||
+                    input.slice(-1) === 't' ||
+                    operators.find((item) => item === input.slice(-1))
+                ) {
+                    input += ` ${e.target.value}`
+                } else {
+                    input += e.target.value
+                }
             } else {
                 null
             }
             calculator.value = input
             calculator.executeCommand(new Insert())
     }
-    document.querySelector('.result-display').innerText = calculator.value
+    if (
+        calculator.value === 'NaN' ||
+        calculator.value === 'Infinity' ||
+        calculator.value === '-Infinity'
+    ) {
+        document.querySelector('.result-display').innerText = 'Incorrect input'
+    } else {
+        document.querySelector('.result-display').innerText = calculator.value
+    }
 })
 
 init(createElem(fillButtons(rightButtons)), '.left-buttons')

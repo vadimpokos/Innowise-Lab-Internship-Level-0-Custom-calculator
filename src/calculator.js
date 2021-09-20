@@ -1,19 +1,19 @@
 import { evaluate } from './evaluate'
 import { InfixToPostfix } from './parser'
 import { handleBrackets } from './bracketsHandler'
+import { functionHandler } from './functionHandler'
 
 export class Calculator {
     constructor(initialValue, app) {
         this.value = initialValue
         this.currentValue = initialValue
         this.memoryValue = initialValue
-        this.pendingFunction = null
-        this.secondFunctionArg = initialValue
         this.app = app
         this.history = []
     }
     executeCommand(command) {
         const commandName = command.__proto__.constructor.name
+        const arrFromValue = this.value.split(' ')
         switch (commandName) {
             case 'Insert':
             case 'CalculateCommand':
@@ -22,50 +22,46 @@ export class Calculator {
                 this.currentValue = this.getCurrentValue(this.value)
                     ? this.getCurrentValue(this.value)
                     : this.currentValue
-
-                console.log('Value: ' + this.value)
-                console.log('currentValue: ' + this.currentValue)
-                console.log('Memory value: ' + this.memoryValue)
-                console.log('App value: ' + this.app.innerText)
-                console.log(this.history)
                 break
-            case 'Pow2':
-            case 'Pow3':
-            case 'EpowX':
-            case 'TenPowX':
-            case 'OneDivideX':
-            case 'SqrtX':
-            case 'CbRtX':
-            case 'Ln':
-            case 'Log10':
-                const arrFromValue = this.value.split(' ')
+            case 'PlusMinus':
+                const currentValueIndex = this.getIndexOfCurrentValue()
                 this.currentValue = command.execute(this.currentValue)
-                this.value = this.getCurrentValue(this.value)
-                    ? [
-                          ...arrFromValue.slice(0, arrFromValue.length - 1),
-                          this.currentValue,
-                      ].join(' ')
-                    : [...arrFromValue, this.currentValue].join(' ')
-                console.log(this.value)
+                this.value = [
+                    ...arrFromValue.slice(0, currentValueIndex),
+                    this.currentValue,
+                    ...arrFromValue.slice(currentValueIndex + 1),
+                ].join(' ')
                 break
-            case 'PowY':
-                this.pendingFunction = command.execute(commandName)
-                console.log(this.pendingFunction)
+            case 'AllClear':
+                this.value = '0'
+                this.currentValue = '0'
+                this.history = []
+                this.memoryValue = '0'
                 break
-            case 'InsertSecondFuncArg':
-                this.secondFunctionArg = command.execute(commandName)
+            case 'Memory':
+                this.memoryValue = command.execute(this.currentValue)
                 break
-            default:
+            case 'MemoryPlus':
+            case 'MemoryMinus':
+                this.memoryValue = command.execute(
+                    this.memoryValue,
+                    this.currentValue
+                )
+                break
+            case 'MemoryRead':
+                this.value = command.execute(this.memoryValue)
                 break
         }
-        this.history.push({
-            name: command,
-            value: this.value,
-            currentValue: this.currentValue,
-            pendingFunction: this.pendingFunction,
-            secondFunctionArg: this.secondFunctionArg,
-        })
+        if (commandName.indexOf('Memory') === -1) {
+            this.history.push({
+                name: command,
+                value: this.value,
+                currentValue: this.currentValue,
+                memoryValue: this.memoryValue,
+            })
+        }
     }
+
     undo() {
         this.history.pop()
         if (this.history.length > 0) {
@@ -83,87 +79,64 @@ export class Calculator {
         const lastValue = value.split(' ')[value.split(' ').length - 1]
         return isNaN(+lastValue) ? false : lastValue
     }
+
+    getIndexOfCurrentValue() {
+        const arrFromValue = this.value.split(' ')
+        return arrFromValue.lastIndexOf(this.currentValue)
+    }
+}
+
+export class PlusMinus {
+    execute(value) {
+        if (value > 0) {
+            return -value
+        } else if (value < 0) {
+            return Math.abs(value)
+        } else {
+            return value
+        }
+    }
+}
+
+export class AllClear {
+    execute() {
+        return null
+    }
+}
+
+export class Memory {
+    execute(value) {
+        return value
+    }
+}
+
+export class MemoryPlus {
+    execute(value1, value2) {
+        return `${+value1 + +value2}`
+    }
+}
+
+export class MemoryMinus {
+    execute(value1, value2) {
+        return `${+value1 - +value2}`
+    }
+}
+
+export class MemoryRead {
+    execute(value) {
+        return value
+    }
 }
 
 export class CalculateCommand {
     execute(value) {
-        return `${evaluate(InfixToPostfix(handleBrackets(value)))}`
+        return `${evaluate(
+            InfixToPostfix(functionHandler(handleBrackets(value)))
+        )}`
     }
 }
 
 export class Insert {
-    execute(value) {
-        return value
-    }
-}
-
-export class Pow2 {
-    execute(value) {
-        return `${Math.pow(value, 2)}`
-    }
-}
-
-export class Pow3 {
-    execute(value) {
-        return `${Math.pow(value, 3)}`
-    }
-}
-
-export class EpowX {
-    execute(value) {
-        return `${Math.pow(2.71828, value)}`
-    }
-}
-
-export class TenPowX {
-    execute(value) {
-        return `${Math.pow(10, value)}`
-    }
-}
-
-export class OneDivideX {
-    execute(value) {
-        return `${1 / value}`
-    }
-}
-
-export class SqrtX {
-    execute(value) {
-        return `${Math.sqrt(value)}`
-    }
-}
-
-export class CbRtX {
-    execute(value) {
-        return `${Math.cbrt(value)}`
-    }
-}
-
-export class Ln {
-    execute(value) {
-        return `${Math.log(value)}`
-    }
-}
-
-export class Log10 {
-    execute(value) {
-        return `${Math.log10(value)}`
-    }
-}
-
-export class PowY {
-    execute(value) {
-        return value
-    }
-}
-
-export class CalculatePowY {
-    execute(firstValue, secondValue) {
-        return `${Math.pow(firstValue, secondValue)}`
-    }
-}
-
-export class InsertSecondFuncArg {
     execute(value) {
         return value
     }

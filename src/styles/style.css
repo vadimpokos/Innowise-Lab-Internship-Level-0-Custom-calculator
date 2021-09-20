@@ -102,7 +102,3 @@ body {
 .equals:active {
     border-bottom-right-radius: 15px;
 }
-
-.backspace {
-    grid-column: 5 / span 2;
-}
