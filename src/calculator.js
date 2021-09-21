@@ -68,7 +68,6 @@ export class Calculator {
             this.value = this.history[this.history.length - 1].value
             this.currentValue =
                 this.history[this.history.length - 1].currentValue
-            console.log(this.history)
         } else {
             this.value = '0'
             console.log('Commands history is empty')
