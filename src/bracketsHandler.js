@@ -1,5 +1,6 @@
 import { evaluate } from './evaluate'
 import { InfixToPostfix } from './parser'
+import { functionHandler } from './functionHandler'
 
 export const handleBrackets = (string) => {
     if (string.includes('(')) {
@@ -12,7 +13,9 @@ export const handleBrackets = (string) => {
             .slice(openIndex + 1, closeIndex)
             .join(' ')
 
-        const bracketsResult = evaluate(InfixToPostfix(stringInBrackets))
+        const bracketsResult = evaluate(
+            InfixToPostfix(functionHandler(stringInBrackets))
+        )
         const newString = [
             ...arrFromString.slice(0, openIndex),
             `${bracketsResult}`,

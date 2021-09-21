@@ -68,6 +68,5 @@ export function InfixToPostfix(infixStr) {
     for (var i = 0; i < postfixStr.length; i++) {
         returnVal += ` ${postfixStr[i]}`
     }
-    console.log(returnVal.trim())
     return returnVal.trim()
 }

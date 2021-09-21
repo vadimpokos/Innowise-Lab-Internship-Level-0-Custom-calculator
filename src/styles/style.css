@@ -84,7 +84,9 @@ body {
 
 .result-display {
     width: 90%;
+    max-width: 90%;
     height: 80%;
+    max-height: 53px;
     font-size: 30px;
     display: flex;
     align-items: center;

@@ -134,9 +134,9 @@ document.querySelector('.buttons-container').addEventListener('click', (e) => {
         default:
             if (e.target.value) {
                 input = calculator.value
-                console.log(input.split(' ').slice(1, -2))
                 if (
                     isNaN(+input.split(' ')[input.split(' ').length - 2]) &&
+                    input.split(' ')[input.split(' ').length - 2] !== ')' &&
                     input.slice(-1) === '-' &&
                     !isNaN(+e.target.value)
                 ) {
