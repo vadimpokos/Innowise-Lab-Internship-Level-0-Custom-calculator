@@ -1,5 +1,7 @@
 # Innowise Lab Internship Level 0 Custom-calculator
 
+## [task](https://docs.google.com/document/d/1j8DnTnRSNoRBdYtKu3Rgk1STLso4X5Rev2-oEyxMsK8/)
+
 ## [demo](https://vadimpokos.github.io/Innowise-Lab-Internship-Level-0-Custom-calculator/)
 
 ## How to run the app
