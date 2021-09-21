@@ -665,7 +665,6 @@ var Calculator = /*#__PURE__*/function () {
       if (this.history.length > 0) {
         this.value = this.history[this.history.length - 1].value;
         this.currentValue = this.history[this.history.length - 1].currentValue;
-        console.log(this.history);
       } else {
         this.value = '0';
         console.log('Commands history is empty');
@@ -889,7 +888,6 @@ function postfixEval(postfixArray) {
   var returnValue = null;
 
   while (stack.length > 0) {
-    console.log(stack);
     var element = stack.pop();
 
     if (isNaN(element)) {
