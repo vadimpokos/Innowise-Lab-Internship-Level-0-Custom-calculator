@@ -28,6 +28,7 @@ body {
 .buttons-container {
     display: flex;
     height: 100%;
+    column-gap: 1px;
 }
 
 .calc-button {

@@ -1,4 +1,5 @@
 {
+  "homepage": "http://vadimpokos.github.io/Innowise-Lab-Internship-Level-0-Custom-calculator",
   "name": "calc",
   "version": "1.0.0",
   "description": "vanilla js calculator",
@@ -8,7 +9,9 @@
     "build": "webpack",
     "dev-server": "webpack serve",
     "prepare": "husky install",
-    "lint:fix": "eslint"
+    "lint:fix": "eslint",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "lint-staged": {
     "*.js": "lint:fix"
@@ -22,7 +25,6 @@
   "bugs": {
     "url": "https://github.com/vadimpokos/Innowise-Lab-Internship-Level-0-Custom-calculator/issues"
   },
-  "homepage": "https://github.com/vadimpokos/Innowise-Lab-Internship-Level-0-Custom-calculator#readme",
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@babel/plugin-transform-modules-commonjs": "^7.15.4",
@@ -34,6 +36,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-prettier": "^4.0.0",
+    "gh-pages": "^3.2.3",
     "husky": "^7.0.2",
     "jest": "^27.2.1",
     "lint-staged": "^11.1.2",
