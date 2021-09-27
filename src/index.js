@@ -1,60 +1,25 @@
 import './styles/style.css'
-
-import { leftButtons, rightButtons } from './calcConfig'
+import { RIGHT_BUTTONS, LEFT_BUTTONS } from './constants/calcConfig'
 import {
     Calculator,
-    CalculateCommand,
-    Insert,
-    PlusMinus,
-    AllClear,
-    MemoryPlus,
-    Memory,
-    MemoryMinus,
-    MemoryRead,
 } from './calculator'
-const operators = ['+', '-', '/', 'X']
+import { Memory } from './commands/MemoryCommand'
+import { MemoryMinus } from './commands/MemoryMinusCommand'
+import { MemoryPlus } from './commands/MemoryPlusCommand'
+import { MemoryRead } from './commands/MemoryReadCommand'
+import { PlusMinus } from './commands/PlusMinusCommand'
+import { AllClear } from './commands/AllClearCommand'
+import { CalculateCommand } from './commands/CalculateCommand'
+import { Insert } from './commands/InsertCommand'
+import { fillButtons } from './utils/fillButtons'
+import { OPERATORS } from './constants/operators'
+import { createElem } from './utils/createElem'
+import {init} from './utils/init'
 
-const fillButtons = (arr) => {
-    return arr.map((item) => {
-        return {
-            type: 'input',
-            properties: {
-                type: 'button',
-                value: item.value,
-                className: `${item.className} calc-button`,
-            },
-            dataAttributes: {
-                [`data-key`]: item.dataKey,
-            },
-        }
-    })
-}
-
-const createElem = (arr) => {
-    const elems = arr.map((item) => {
-        const element = document.createElement(item.type)
-        if (operators.find((operator) => operator === item.properties.value)) {
-            element.setAttribute('data-operator', 'true')
-        }
-
-        Object.entries(item.properties || {}).forEach(([key, value]) => {
-            element[key] = value
-        })
-        Object.entries(item.dataAttributes || {}).forEach(([key, value]) => {
-            element.setAttribute(key, value)
-        })
-        return element
-    })
-    return elems
-}
-
-const init = (arr, place) => {
-    arr.forEach((item) => document.querySelector(place).append(item))
-}
 
 document.querySelector('.result-display').innerText = '0'
 
-const calculator = new Calculator(
+export const calculator = new Calculator(
     document.querySelector('.result-display').innerText,
     document.querySelector('.result-display')
 )
@@ -146,7 +111,7 @@ document.querySelector('.buttons-container').addEventListener('click', (e) => {
                     input.slice(-1) === '(' ||
                     input.slice(-1) === '^' ||
                     input.slice(-1) === 't' ||
-                    operators.find((item) => item === input.slice(-1))
+                    OPERATORS.find((item) => item === input.slice(-1))
                 ) {
                     input += ` ${e.target.value}`
                 } else {
@@ -169,6 +134,6 @@ document.querySelector('.buttons-container').addEventListener('click', (e) => {
     }
 })
 
-init(createElem(fillButtons(rightButtons)), '.left-buttons')
+init(createElem(fillButtons(LEFT_BUTTONS)), '.left-buttons')
 
-init(createElem(fillButtons(leftButtons)), '.right-buttons')
+init(createElem(fillButtons(RIGHT_BUTTONS)), '.right-buttons')

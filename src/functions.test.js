@@ -1,7 +1,7 @@
-import { evaluate } from './evaluate'
-import { InfixToPostfix } from './parser'
-import { handleBrackets } from './bracketsHandler'
-import { functionHandler } from './functionHandler'
+import { evaluate } from './utils/evaluate'
+import { InfixToPostfix } from './utils/parser'
+import { handleBrackets } from './utils/bracketsHandler'
+import { functionHandler } from './utils/functionHandler'
 
 test('sum test', () => {
     expect(

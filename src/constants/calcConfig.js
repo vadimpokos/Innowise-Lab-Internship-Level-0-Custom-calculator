@@ -1,4 +1,4 @@
-export const leftButtons = [
+export const RIGHT_BUTTONS = [
     { value: 'AC', className: 'dark', dataKey: 'AC' },
     { value: '±', className: 'dark', dataKey: 'plusMinus' },
     { value: '%', className: 'dark', dataKey: '%' },
@@ -20,7 +20,7 @@ export const leftButtons = [
     { value: '=', className: 'yellow equals', dataKey: 'equals' },
 ]
 
-export const rightButtons = [
+export const LEFT_BUTTONS = [
     { value: '(', className: 'dark', dataKey: '(' },
     { value: ')', className: 'dark', dataKey: ')' },
     { value: 'mc', className: 'dark', dataKey: 'mc' },
