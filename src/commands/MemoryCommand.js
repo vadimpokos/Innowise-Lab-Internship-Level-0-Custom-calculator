@@ -1,7 +1,9 @@
-import { calculator } from '..'
-
 export class Memory {
+    constructor(calculator) {
+        this.calculator = calculator
+    }
+
     execute(value, currentValue, memoryValue) {
-        calculator.memoryValue = currentValue
+        this.calculator.memoryValue = currentValue
     }
 }

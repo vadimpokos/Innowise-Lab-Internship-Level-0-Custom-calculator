@@ -10,9 +10,9 @@ export class Calculator {
         command.execute(this.value, this.currentValue, this.memoryValue)
     }
 
-    pushToHistory(command) {
+    pushToHistory() {
         this.history.push({
-            name: command,
+            name: this,
             value: this.value,
             currentValue: this.currentValue,
             memoryValue: this.memoryValue,

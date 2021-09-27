@@ -1,16 +1,18 @@
-import { calculator } from '..'
-
 export class PlusMinus {
-    execute(value, currentValue, memoryValue) {
-        const arrFromValue = calculator.value.split(' ')
+    constructor(calculator) {
+        this.calculator = calculator
+    }
 
-        const currentValueIndex = calculator.getIndexOfCurrentValue()
-        calculator.currentValue = value > 0 ? -value : Math.abs(value)
-        calculator.value = [
+    execute(value, currentValue, memoryValue) {
+        const arrFromValue = this.calculator.value.split(' ')
+
+        const currentValueIndex = this.calculator.getIndexOfCurrentValue()
+        this.calculator.currentValue = value > 0 ? -value : Math.abs(value)
+        this.calculator.value = [
             ...arrFromValue.slice(0, currentValueIndex),
-            calculator.currentValue,
+            this.calculator.currentValue,
             ...arrFromValue.slice(currentValueIndex + 1),
         ].join(' ')
-        calculator.pushToHistory(this)
+        this.calculator.pushToHistory()
     }
 }

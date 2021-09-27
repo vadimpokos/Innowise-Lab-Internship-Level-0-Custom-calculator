@@ -1,10 +1,12 @@
-import { calculator } from '..'
-
 export class AllClear {
+    constructor(calculator) {
+        this.calculator = calculator
+    }
+
     execute(value, currentValue, memoryValue) {
-        calculator.value = '0'
-        calculator.currentValue = '0'
-        calculator.history = []
-        calculator.memoryValue = '0'
+        this.calculator.value = '0'
+        this.calculator.currentValue = '0'
+        this.calculator.history = []
+        this.calculator.memoryValue = '0'
     }
 }

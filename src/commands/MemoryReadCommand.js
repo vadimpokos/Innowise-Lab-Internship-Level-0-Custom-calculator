@@ -1,7 +1,9 @@
-import { calculator } from '..'
-
 export class MemoryRead {
+    constructor(calculator) {
+        this.calculator = calculator
+    }
+
     execute(value, currentValue, memoryValue) {
-        calculator.value = memoryValue
+        this.calculator.value = memoryValue
     }
 }

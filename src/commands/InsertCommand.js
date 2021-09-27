@@ -1,12 +1,16 @@
-import { calculator } from '..'
-
 export class Insert {
+    constructor(calculator) {
+        this.calculator = calculator
+    }
+
     execute(value, currentValue, memoryValue) {
-        calculator.value = value
-        calculator.app.innerText = calculator.value
-        calculator.currentValue = calculator.getCurrentValue(calculator.value)
-            ? calculator.getCurrentValue(calculator.value)
-            : calculator.currentValue
-        calculator.pushToHistory(this)
+        this.calculator.value = value
+        this.calculator.app.innerText = this.calculator.value
+        this.calculator.currentValue = this.calculator.getCurrentValue(
+            this.calculator.value
+        )
+            ? this.calculator.getCurrentValue(this.calculator.value)
+            : this.calculator.currentValue
+        this.calculator.pushToHistory()
     }
 }
