@@ -1,4 +1,4 @@
-import { OPERATORS } from "../constants/operators";
+import { OPERATORS } from '../constants/operators'
 
 export const createElem = (arr) => {
     const elems = arr.map((item) => {

@@ -1,5 +1,3 @@
-
-
 export class Calculator {
     constructor(initialValue, app) {
         this.value = initialValue
@@ -10,7 +8,6 @@ export class Calculator {
     }
     executeCommand(command) {
         command.execute(this.value, this.currentValue, this.memoryValue)
-       
     }
 
     pushToHistory(command) {
@@ -18,7 +15,7 @@ export class Calculator {
             name: command,
             value: this.value,
             currentValue: this.currentValue,
-                memoryValue: this.memoryValue,
+            memoryValue: this.memoryValue,
         })
     }
 
@@ -44,18 +41,3 @@ export class Calculator {
         return arrFromValue.lastIndexOf(this.currentValue)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

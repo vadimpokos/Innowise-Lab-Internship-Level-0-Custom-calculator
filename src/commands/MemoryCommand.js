@@ -1,4 +1,4 @@
-import { calculator } from ".."
+import { calculator } from '..'
 
 export class Memory {
     execute(value, currentValue, memoryValue) {

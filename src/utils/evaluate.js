@@ -19,5 +19,3 @@ export const evaluate = (expr) => {
 
     return stack.pop()
 }
-
-

@@ -1,8 +1,6 @@
 import './styles/style.css'
 import { RIGHT_BUTTONS, LEFT_BUTTONS } from './constants/calcConfig'
-import {
-    Calculator,
-} from './calculator'
+import { Calculator } from './calculator'
 import { Memory } from './commands/MemoryCommand'
 import { MemoryMinus } from './commands/MemoryMinusCommand'
 import { MemoryPlus } from './commands/MemoryPlusCommand'
@@ -14,8 +12,7 @@ import { Insert } from './commands/InsertCommand'
 import { fillButtons } from './utils/fillButtons'
 import { OPERATORS } from './constants/operators'
 import { createElem } from './utils/createElem'
-import {init} from './utils/init'
-
+import { init } from './utils/init'
 
 document.querySelector('.result-display').innerText = '0'
 
